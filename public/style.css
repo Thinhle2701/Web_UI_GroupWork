@@ -1,0 +1,29 @@
+body{
+  padding:0px;
+  margin:0px;
+}
+header {
+  background: 
+    url(https://gloot.com/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F77886%2F1662463737-screenshot_2022-01-13_at_13-45-29.png&w=1280&q=75);
+  background-size: cover;
+  height: 100vh;
+}
+
+.tieu_de {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  text-align: center;
+}
+h1 {
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 2rem;
+  white-space: nowrap;
+}
+h5{
+  font-size: 1rem;
+}
+
