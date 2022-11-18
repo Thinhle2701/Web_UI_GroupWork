@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "argon2": "^0.28.7",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "create-object-url": "^1.0.2",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  }
+}
