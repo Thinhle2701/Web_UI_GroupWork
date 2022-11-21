@@ -106,7 +106,7 @@ const OderDetail = ({ setModal, detailOrder, orderInfo }) => {
           {modalType == "item" ? (
             <>
               <List disablePadding>
-                {detailOrder.line_items.map((item) => (
+                {detailOrder.order.line_items.map((item) => (
                   <div>
                     <ListItem key={item.product_name}>
                       <img
@@ -147,7 +147,7 @@ const OderDetail = ({ setModal, detailOrder, orderInfo }) => {
                     variant="subtitle1"
                     style={{ fontWeight: 700, fontSize: "40px" }}
                   >
-                    {detailOrder.subtotal.formatted_with_symbol}
+                    {detailOrder.order.total.formatted_with_symbol}
                   </Typography>
                 </ListItem>
               </List>

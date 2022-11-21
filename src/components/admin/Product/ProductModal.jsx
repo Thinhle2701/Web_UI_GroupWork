@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { storage } from "../../../firebase";
 import {
@@ -25,7 +25,7 @@ const options = [
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" },
 ];
-const ProductModal = ({ setOpenModal, categories }) => {
+const ProductModal = ({ setOpenModal, categories,urlAPI }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [imageChoose, setImageChoose] = useState("");
@@ -36,6 +36,8 @@ const ProductModal = ({ setOpenModal, categories }) => {
   const [productPrice, setProductPrice] = useState(0);
   const [productCategory, setProductCategory] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [description, setDescription] = useState("<p></p>");
+  const inputRef = useRef(null);
   const uploadImage = () => {
     if (imageUpload == null) return;
 
@@ -86,17 +88,20 @@ const ProductModal = ({ setOpenModal, categories }) => {
   const handleDelete = () => {
     if (imageList.length > 1) {
       for (let i = 0; i < imageList.length; i++) {
-        if (imageList[i].original == imageChoose) {
+        if (imageList[i].original.localeCompare(imageChoose) == 1) {
           handleRemoveItem(imageList[i].original);
           deleteFirebase(imageList[i].fileName);
         }
       }
+      // console.log("deleted", imageChoose);
+      // console.log("list ", imageList);
     } else {
       alert("Your product should have one image");
     }
   };
 
   console.log("image ne", imageList);
+  console.log("text", description.toString());
 
   const imageListRef = ref(storage, "temp/");
   const deleteFirebase = (fileName) => {
@@ -124,9 +129,9 @@ const ProductModal = ({ setOpenModal, categories }) => {
     tranferCategories();
   }, [categories]);
 
-  console.log("name: ", productName);
-  console.log("price: ", productPrice);
-  console.log("category: ", productCategory);
+  // console.log("name: ", productName);
+  // console.log("price: ", productPrice);
+  // console.log("category: ", productCategory);
 
   const handleCreateProduct = async () => {
     if (productName == "" || productPrice == 0 || productCategory == "") {
@@ -149,6 +154,7 @@ const ProductModal = ({ setOpenModal, categories }) => {
             product: {
               name: productName,
               price: productPrice,
+              description: description,
             },
             assets: assetsList,
             categories: category,
@@ -161,7 +167,7 @@ const ProductModal = ({ setOpenModal, categories }) => {
           }
         )
         .then(async (response) => {
-          const url = "http://localhost:8000/api/product/add_product";
+          const url = urlAPI + "api/product/add_product";
           await axios
             .post(url, {
               id: response.data.id,
@@ -170,8 +176,10 @@ const ProductModal = ({ setOpenModal, categories }) => {
               price: response.data.price.formatted_with_symbol,
               numberOnSale: 0,
             })
-            .then((response) => {
+            .then(async (response) => {
               console.log(response);
+              await setOpenModal(false);
+              window.location.reload();
             })
             .catch(function (err) {
               console.log(err);
@@ -205,6 +213,11 @@ const ProductModal = ({ setOpenModal, categories }) => {
       }
     }
   };
+
+  const handleChangeDescription = (event) => {
+    setDescription(event.target.value);
+  };
+
   return (
     <div>
       <div>
@@ -261,6 +274,17 @@ const ProductModal = ({ setOpenModal, categories }) => {
           />
         </div>
       </div>
+      <div>
+        <p style={{ fontWeight: "bold" }}>Product Description</p>
+        <textarea
+          value={description}
+          onChange={(e) => {
+            handleChangeDescription(e);
+          }}
+          style={{ width: "100%", height: "100px" }}
+          placeholder="Product Information"
+        ></textarea>
+      </div>
 
       <div style={{ marginTop: "20px" }}>
         <p style={{ fontWeight: "bold" }}>Category</p>
@@ -302,6 +326,7 @@ const ProductModal = ({ setOpenModal, categories }) => {
                 )}
                 {imageList.length === 0 ? <div></div> : <div></div>}
                 <ImageGallery
+                  inputRef={inputRef}
                   style={{}}
                   items={imageList}
                   showIndex={true}

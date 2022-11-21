@@ -6,8 +6,11 @@ import { Row, Col } from "antd";
 import DetailsThumb from "./DetailsThumb";
 import ProductImage from "./Section/ProductImage";
 import ProductInfo from "./Section/ProductInfo";
+import axios from "axios"
+import { async } from "@firebase/util";
 
 const ProductDetail = ({ ProductList, detail, AddToCart}) => {
+  const [isLoading,setIsLoading] = useState(true)
   const [product, setProduct] = useState({});
   const [img, SetImg] = useState([{}]);
   const { productId } = useParams();
@@ -21,13 +24,37 @@ const ProductDetail = ({ ProductList, detail, AddToCart}) => {
       }
     }
   }
-  //  console.log(product)
+  console.log(product)
   useEffect(() => {
-    getProduct(productId);
-  },[product]);
+    // getProduct(productId);
+   async function fetchProduct(productID){
+
+      console.log("pro ne: ",productID);
+      const url = "https://api.chec.io/v1/products/" + productID
+     await axios.get(url,{
+        headers: {
+          "X-Authorization": "pk_4513267273233fc7080de820c6f5b5630e0fadf031a5a",
+        },
+      })
+      .then(res => {
+        setProduct(res.data);
+        SetImg(res.data.assets)
+        setPrice(res.data.price.formatted_with_symbol)
+        // SetImg(res)
+        setIsLoading(false)
+      })
+      .catch(error => console.log(error));
+    }
+    
+    fetchProduct(productId);
+  },[productId]);
 
   return (
-    <div style={{ width: "100%", padding: "3rem 4rem" }}>
+    <div>
+        {isLoading === true ? (
+        <div style={{ textAlign: "center" }}>
+          <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6d391369321565.5b7d0d570e829.gif"></img>
+        </div>):(    <div style={{ width: "100%", padding: "3rem 4rem" }}>
       <br />
       <Row gutter={[16, 16]} style={{ display: "flex" }}>
         <Col>
@@ -42,6 +69,8 @@ const ProductDetail = ({ ProductList, detail, AddToCart}) => {
           </Col>
         </Col>
       </Row>
+    </div>)}
+
     </div>
   );
 };

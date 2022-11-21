@@ -17,7 +17,7 @@ const option = {
 const BarChart = ({ chartData }) => {
   return (
     <div>
-      <Bar data={chartData} options={option} />
+      <Bar  data={chartData} options={option} />
     </div>
   );
 };

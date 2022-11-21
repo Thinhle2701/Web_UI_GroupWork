@@ -36,7 +36,7 @@ const successStyles = {
   },
 };
 
-function SignUpForm() {
+function SignUpForm({ urlAPI }) {
   useEffect(() => {
     setErrMsg("");
   }, []);
@@ -64,13 +64,15 @@ function SignUpForm() {
 
       setSignUpSuccess(false);
     } else {
+      const cart = JSON.parse(cartTemp);
+      const url = urlAPI + "api/user/add_user";
       axios
-        .post("http://localhost:8000/api/user/add_user", {
+        .post(url, {
           username: username,
           password: password,
           email: email,
           url: "https://static.thenounproject.com/png/363640-200.png",
-          cartID: JSON.parse(cartTemp),
+          cartID: cart.id,
           userType: "user",
         })
         .then(async (res) => {

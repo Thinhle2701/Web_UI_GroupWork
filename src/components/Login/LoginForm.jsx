@@ -45,6 +45,7 @@ function LoginModal({
   setSuccessLogin,
   setTypeLogin,
   SetURL,
+  urlApi,
 }) {
   // const userRef = useRef();
   // const errRef = useRef();
@@ -53,18 +54,17 @@ function LoginModal({
   const [errMsg, setErrMsg] = useState("");
   const [loginStatus, SetLoginStatus] = useState(false);
 
-
   const headers = {
     "Content-Type": "application/json",
   };
-  const url = "http://localhost:8000/api/user";
+  // const url = urlApi + "api/user";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(user, password);
-
+    const url = urlApi + "api/user/login";
     axios
-      .post("http://localhost:8000/api/user/login", {
+      .post(url, {
         username: user,
         password: password,
       })
@@ -147,13 +147,20 @@ function LoginModal({
             border: "none",
             fontSize: "20px",
             cursor: "pointer",
-            marginBottom:'-30px'
+            marginBottom: "-30px",
           }}
           onClick={() => setOpenModal(false)}
         >
           X
         </button>
-        <div style={{ display: "flex", justifyContent: "center",marginBottom:'-40px',fontSize:'20px' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "-40px",
+            fontSize: "20px",
+          }}
+        >
           <h2>Login</h2>
         </div>
         <section>
@@ -331,7 +338,7 @@ function LoginModal({
                 </button>
               </div>
             </form>
-            <p style={{ fontSize:'15px'}}>
+            <p style={{ fontSize: "15px" }}>
               if you do not have any account ?{" "}
               <Link
                 style={{ color: "red" }}

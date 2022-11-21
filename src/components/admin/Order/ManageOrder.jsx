@@ -4,7 +4,13 @@ import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
 import OrderItem from "../../OrderManage/OrderItems/OrderItem";
 import { orderData } from "../Order/Chart/OrderData";
 import axios from "axios";
-const ManageOrder = ({ orderList, isLoading, ordStatistic,setNumberConfirmORD,numberConfirmORD }) => {
+const ManageOrder = ({
+  orderList,
+  isLoading,
+  ordStatistic,
+  setNumberConfirmORD,
+  numberConfirmORD,
+}) => {
   const [ordData, setOrdData] = useState({
     labels: ordStatistic.map((data) => data.month),
     datasets: [
@@ -19,6 +25,7 @@ const ManageOrder = ({ orderList, isLoading, ordStatistic,setNumberConfirmORD,nu
   const [buttonOne, setButtonOne] = useState("contained");
   const [buttonTwo, setButtonTwo] = useState("outlined");
 
+  console.log("is loading: ", isLoading);
   // console.log("statistic", ordStatistic);
 
   // const handleClickStatistic = () => {
@@ -67,18 +74,18 @@ const ManageOrder = ({ orderList, isLoading, ordStatistic,setNumberConfirmORD,nu
               >
                 {type}
               </Typography>
-                  {orderList.map((ord) => (
-                    <div key={ord.orderID}>
-                      <OrderItem
-                        ordID={ord.orderID}
-                        orderItem={ord}
-                        detail={ord.orderDetail}
-                        userRole="admin"
-                        numberOrderConfirm={numberConfirmORD}
-                        setOrderConfirm={setNumberConfirmORD}
-                      />
-                    </div>
-                  ))}
+              {orderList.map((ord) => (
+                <div key={ord.orderID}>
+                  <OrderItem
+                    ordID={ord.orderID}
+                    orderItem={ord}
+                    detail={ord.orderDetail}
+                    userRole="admin"
+                    numberOrderConfirm={numberConfirmORD}
+                    setOrderConfirm={setNumberConfirmORD}
+                  />
+                </div>
+              ))}
             </div>
           )}
         </div>

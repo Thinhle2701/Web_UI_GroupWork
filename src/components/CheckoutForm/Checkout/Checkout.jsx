@@ -20,7 +20,7 @@ import { Link, useLocation } from "react-router-dom";
 import dataShipping from "../DataAddress.json";
 
 const steps = ["Delivery", "Payment"];
-const Checkout = ({ cart, user, setCart, setUser }) => {
+const Checkout = ({ cart, user, setCart, setUser, urlAPI }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingData, setShippingData] = useState({});
@@ -61,7 +61,7 @@ const Checkout = ({ cart, user, setCart, setUser }) => {
   const addNewEmptyCart = async () => {
     await commerce.cart.refresh().then((cart) => {
       setCart(cart);
-      const url = "http://localhost:8000/api/user/update_cart/" + user.userID;
+      const url = urlAPI + "api/user/update_cart/" + user.userID;
       axios
         .put(url, {
           cartID: cart.id,
@@ -142,6 +142,7 @@ const Checkout = ({ cart, user, setCart, setUser }) => {
       <DeliveryForm next={next} />
     ) : (
       <PaymentForm
+        URLAPI={urlAPI}
         cart={cart}
         back={backStep}
         next={nextStep}
@@ -185,6 +186,7 @@ const Checkout = ({ cart, user, setCart, setUser }) => {
                   customer={user}
                   refreshCart={addNewEmptyCart}
                   city={cityName}
+                  URLAPI={urlAPI}
                 />
               )}
             </div>

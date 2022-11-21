@@ -34,6 +34,7 @@ const OrderItem = ({
   userRole,
   setOrderConfirm,
   numberOrderConfirm,
+  urlAPI,
 }) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const customStyles = {
@@ -92,7 +93,8 @@ const OrderItem = ({
   const [colorLabel, setColorLabel] = useState("");
 
   useEffect(() => {
-    console.log(orderItem.status);
+    console.log("test item: ", orderItem);
+    console.log("test detail: ", detail);
     if (statusOrd == "is delivering") {
       setColorLabel("🟡is delivering");
     } else if (statusOrd == "is confirmed") {
@@ -105,9 +107,10 @@ const OrderItem = ({
     }
   });
   // console.log(detail.line_items.length);
+  console.log("order ne thinh", orderItem);
   const [indexItem, setIndexItem] = useState(0);
   const handleClickArrowRight = () => {
-    if (indexItem == detail.line_items.length - 1) {
+    if (indexItem == detail.order.line_items.length - 1) {
       setIndexItem(0);
     } else {
       var temp = indexItem + 1;
@@ -127,7 +130,7 @@ const OrderItem = ({
   console.log(colorLabel);
 
   const handleOnClickDelete = async () => {
-    const url_del = url + "api/order/delete/" + ordID;
+    const url_del = urlAPI + "api/order/delete/" + ordID;
     console.log(url_del);
     axios.delete(url_del).then(async (res) => {
       console.log(res);
@@ -142,7 +145,7 @@ const OrderItem = ({
   const handleConfirmOrder = () => {
     setConfirmOrder("YES");
     setOrderConfirm(numberOrderConfirm - 1);
-    const url = "http://localhost:8000/api/order/update_status/" + ordID;
+    const url = urlAPI + "api/order/update_status/" + ordID;
     axios
       .put(url, {
         status: "is confirmed",
@@ -156,7 +159,7 @@ const OrderItem = ({
 
   const handleUpdateStatusOrder = () => {
     if (selectStatus != statusOrd) {
-      const url = "http://localhost:8000/api/order/update_status/" + ordID;
+      const url = urlAPI + "api/order/update_status/" + ordID;
       axios
         .put(url, {
           status: selectStatus,
@@ -373,7 +376,7 @@ const OrderItem = ({
           <div style={{}}>
             <div style={{ alignItems: "center", textAlign: "center" }}>
               <p style={{ fontWeight: "bold", fontSize: "30px" }}>
-                {detail.line_items[indexItem].product_name}
+                {detail.order.line_items[indexItem].product_name}
               </p>
             </div>
 
@@ -389,7 +392,7 @@ const OrderItem = ({
                 }}
               >
                 <img
-                  src={detail.line_items[indexItem].image.url}
+                  src={detail.order.line_items[indexItem].image.url}
                   style={{
                     height: "150px",
                     width: "200px",
@@ -398,12 +401,15 @@ const OrderItem = ({
                   }}
                 ></img>
                 <div style={{ fontSize: "20px", marginLeft: "200px" }}>
-                  <p>Quantity: {detail.line_items[indexItem].quantity}</p>
+                  <p>Quantity: {detail.order.line_items[indexItem].quantity}</p>
                 </div>
                 <div style={{ fontSize: "20px", marginLeft: "200px" }}>
                   <p style={{ fontSize: "20px" }}>
                     Price Per unit:{" "}
-                    {detail.line_items[indexItem].price.formatted_with_symbol}
+                    {
+                      detail.order.line_items[indexItem].price
+                        .formatted_with_symbol
+                    }
                   </p>
                 </div>
               </div>
@@ -426,7 +432,7 @@ const OrderItem = ({
               <p
                 style={{ color: "green", fontWeight: "bold", fontSize: "30px" }}
               >
-                Total: {orderItem.orderDetail.subtotal.formatted_with_symbol}
+                Total: {orderItem.orderDetail.order.total.formatted_with_symbol}
               </p>
             </div>
             <div style={{ textAlign: "right", paddingRight: "10px" }}>

@@ -8,6 +8,7 @@ import {
   Menu,
   Typography,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import { Button } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
@@ -33,8 +34,13 @@ const Navbar = ({
   avatarURL,
   numberItem,
   adminUser,
-  numberConfirmOrd
+  numberConfirmOrd,
 }) => {
+  const history = useHistory();
+
+  const handleClickProfile = () => {
+    history.push("/profile");
+  };
   const classes = useStyles();
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
@@ -42,6 +48,9 @@ const Navbar = ({
 
   const handleClickProfileMenu = (event) => {
     setOpenMenu(event.currentTarget);
+  };
+  const handleClickYourOrder = () => {
+    history.push("/order");
   };
 
   const handleClose = () => {
@@ -130,14 +139,8 @@ const Navbar = ({
                   onClose={handleClose}
                   open={Boolean(openMenu)}
                 >
-                  <MenuItem onClick={handleClose}>My Account</MenuItem>
-                  <MenuItem>
-                    <div>
-                      <Button component={Link} to="/order">
-                        Your Order
-                      </Button>
-                    </div>
-                  </MenuItem>
+                  <MenuItem onClick={handleClickProfile}>My Account</MenuItem>
+                  <MenuItem onClick={handleClickYourOrder}>Your Order</MenuItem>
                   <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                 </Menu>
               </div>
@@ -157,7 +160,7 @@ const Navbar = ({
           {adminUser.user_type === "admin" && checkLogin == true ? (
             <div style={{ display: "" }}>
               <IconButton component={Link} to="/admin">
-                <div style={{display:"flex",alignItems:"right"}}>
+                <div style={{ display: "flex", alignItems: "right" }}>
                   <Badge
                     style={{ fontSize: "30px", display: "block" }}
                     overlap="rectangular"

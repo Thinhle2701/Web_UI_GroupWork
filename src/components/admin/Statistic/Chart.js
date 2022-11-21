@@ -3,6 +3,7 @@ import BarChart from "../Statistic/Barchart";
 import { orderData } from "../Order/Chart/OrderData";
 import LineChart from "../Statistic/LineChart";
 const Chart = ({ ordStatistic, productStatistic }) => {
+  const [highestProduct, setHighestProduct] = useState("");
   const [ordData, setOrdData] = useState({
     labels: ordStatistic.map((data) => data.month),
     datasets: [
@@ -67,11 +68,49 @@ const Chart = ({ ordStatistic, productStatistic }) => {
       },
     ],
   };
+  useEffect(() => {
+    function maxProduct() {
+      var max = 0;
+      var highestName = "";
+      for (let i = 0; i < productStatistic.length; i++) {
+        if (productStatistic[i].numberOnSale > max) {
+          max = productStatistic[i].numberOnSale;
+          highestName = productStatistic[i].name;
+        }
+      }
+      setHighestProduct(highestName);
+    }
+    maxProduct();
+  }, [productStatistic]);
+  // console.log("test statistic", productStatistic);
   return (
-    <div style={{ height: "800px", width: "500px", marginTop: "100px" }}>
-      <BarChart chartData={test} />
+    <div style={{ height: "800px", width: "100%", marginTop: "100px" }}>
+      {/* <h1 style={{ textAlign: "center" }}>Chart Statistic</h1> */}
+      <div style={{ marginLeft: "25%", width: "50%" }}>
+        <div style={{}}>
+          <h2 style={{ textAlign: "center" }}>Number Product is Sold</h2>
+          <BarChart chartData={test} />
+        </div>
+      </div>
+      <div style={{ display: "flex" }}>
+        <img
+          style={{ width: "150px", height: "100px", marginLeft: "30%" }}
+          src="https://i.pinimg.com/originals/a8/54/f2/a854f2287274a36338bddd6cd82ad3ea.jpg"
+        ></img>
+        <div style={{ marginTop: "20px" }}>
+          <p>The highest value : {highestProduct}</p>
+        </div>
+      </div>
 
-      <LineChart chartData={lineData} />
+      <div style={{ marginLeft: "25%", width: "50%", marginTop: "50px" }}>
+        <div style={{}}>
+          <h2 style={{ textAlign: "center" }}>Number Order </h2>
+          <LineChart chartData={lineData} />
+        </div>
+      </div>
+      {/* <div style={{ width: "60%" }}>
+        <LineChart chartData={lineData} />
+      </div> */}
     </div>
   );
 };

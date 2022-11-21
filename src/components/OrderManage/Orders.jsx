@@ -3,10 +3,10 @@ import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
 import { commerce } from "../../lib/commerce";
 import OrderItem from "./OrderItems/OrderItem";
 import axios from "axios";
-const Orders = ({ orderList, isLoading }) => {
+const Orders = ({ orderList, isLoading,urlAPI }) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const [orderState, setOrderState] = useState([{}]);
-  const userInfo = "user"
+  const userInfo = "user";
 
   // useEffect(() => {
   //   const setLoading = async () => {
@@ -18,7 +18,7 @@ const Orders = ({ orderList, isLoading }) => {
   //   setLoading();
   // }, [orderList]);
 
-  console.log(orderList);
+  console.log("order list user: ", orderList);
 
   const setValue = () => {
     console.log("hello");
@@ -33,7 +33,7 @@ const Orders = ({ orderList, isLoading }) => {
       ) : (
         <div>
           {orderList.length === 0 ? (
-            <div style={{textAlign:"center",marginTop:"20%"}}>
+            <div style={{ textAlign: "center", marginTop: "20%" }}>
               <p>You do not have any order</p>
             </div>
           ) : (
@@ -53,6 +53,7 @@ const Orders = ({ orderList, isLoading }) => {
               {orderList.map((ord) => (
                 <div key={ord.orderID}>
                   <OrderItem
+                    urlAPI={urlAPI}
                     ordID={ord.orderID}
                     orderItem={ord}
                     detail={ord.orderDetail}
