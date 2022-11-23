@@ -72,7 +72,7 @@ const ManageOrder = ({
                   textAlign: "center",
                 }}
               >
-                {type}
+                Order Management
               </Typography>
               {orderList.map((ord) => (
                 <div key={ord.orderID}>

@@ -47,7 +47,7 @@ const Orders = ({ orderList, isLoading,urlAPI }) => {
                   textAlign: "center",
                 }}
               >
-                Your Order
+                Your Order History
               </Typography>
 
               {orderList.map((ord) => (

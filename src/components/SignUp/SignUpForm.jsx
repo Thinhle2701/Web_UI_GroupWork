@@ -4,6 +4,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import "./style.css";
 import { useHistory } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const unsuccessStyles = {
@@ -98,7 +99,7 @@ function SignUpForm({ urlAPI }) {
     }
   };
   return (
-    <div>
+    <div style={{backgroundColor:"#e8ebe9",height:"1000px",overflow:"hidden",width:"auto"}}>
       <div style={{ display: "flex" }}>
         <button
           style={{
@@ -115,7 +116,7 @@ function SignUpForm({ urlAPI }) {
             history.push("/");
           }}
         >
-          ⇤ back{" "}
+          <ArrowBackIcon style={{fontSize:"30px"}} />
         </button>
 
         <p
@@ -127,7 +128,7 @@ function SignUpForm({ urlAPI }) {
             marginBottom: "-60px",
           }}
         >
-          Signup
+          Sign Up
         </p>
       </div>
       <div className="form" onSubmit={handleSubmit}>
@@ -136,60 +137,60 @@ function SignUpForm({ urlAPI }) {
             <label
               className="form__label"
               for="firstName"
-              style={{ color: "#DC0047", fontWeight: "bold" }}
+              style={{ color: "black", fontWeight: "bold",fontSize:"20px"  }}
             >
-              Username{" "}
+              👤 Username{" "}
             </label>
             <input
               style={{
                 justifyContent: "flex-end",
                 display: "flex",
-                border: "3px solid #DC0047",
+                border: "2px solid black",
               }}
               className="form__input"
               type="text"
               id="firstName"
-              placeholder="Username"
+              placeholder="Fill Username"
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div className="email">
+          <div className="email" style={{marginTop:"20px"}}>
             <label
               className="form__label"
               for="email"
-              style={{ color: "green", fontWeight: "bold" }}
+              style={{ color: "black", fontWeight: "bold",fontSize:"20px"  }}
             >
-              Email{" "}
+             📧 Email{" "}
             </label>
             <input
               style={{
                 justifyContent: "flex-end",
                 display: "flex",
-                border: "3px solid green",
+                border: "2px solid black",
               }}
               type="email"
               id="email"
               className="form__input"
-              placeholder="Email"
+              placeholder=" Email"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
           </div>
-          <div className="password">
+          <div className="password" style={{marginTop:"20px"}}>
             <label
               className="form__label"
               for="password"
-              style={{ color: "#1F6CAD", fontWeight: "bold" }}
+              style={{ color: "black", fontWeight: "bold",fontSize:"20px" }}
             >
-              Password{" "}
+             🔑 Password{" "}
             </label>
             <input
               className="form__input"
               style={{
                 justifyContent: "flex-end",
                 display: "flex",
-                border: "3px solid #1F6CAD",
+                border: "2px solid black",
               }}
               type="password"
               id="password"
@@ -199,20 +200,20 @@ function SignUpForm({ urlAPI }) {
               }}
             />
           </div>
-          <div className="confirm-password">
+          <div className="confirm-password" style={{marginTop:"20px"}}>
             <label
               className="form__label"
               for="confirmPassword"
-              style={{ color: "#7B4EA3", fontWeight: "bold" }}
+              style={{ color: "black", fontWeight: "bold",fontSize:"20px" }}
             >
-              Confirm Password{" "}
+              🔐 Confirm Password{" "}
             </label>
             <input
               className="form__input"
               style={{
                 justifyContent: "flex-end",
                 display: "flex",
-                border: "3px solid #7B4EA3",
+                border: "2px solid black",
               }}
               type="password"
               id="confirmPassword"
@@ -286,13 +287,12 @@ function SignUpForm({ urlAPI }) {
         <div className="footer">
           <button
             style={{
-              border: "2px solid orange",
               transitionDuration: "0.4s",
-              backgroundColor: "orange" /* Green */,
+              backgroundColor: "black" /* Green */,
               color: "white",
               height: "48px",
               width: "200px",
-              marginTop: "5px",
+              marginTop: "25px",
             }}
             type="submit"
             onClick={() => handleSubmit()}

@@ -46,7 +46,7 @@ const Product = ({ product, onAddToCart, OnResultProduct, compareMode,filterCate
             {product.name}
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             {product.price.formatted_with_symbol}
           </Typography>
         </div>
