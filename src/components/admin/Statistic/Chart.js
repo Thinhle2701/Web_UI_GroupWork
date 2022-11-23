@@ -97,9 +97,6 @@ const Chart = ({ ordStatistic, productStatistic }) => {
           style={{ width: "150px", height: "100px", marginLeft: "30%" }}
           src="https://i.pinimg.com/originals/a8/54/f2/a854f2287274a36338bddd6cd82ad3ea.jpg"
         ></img>
-        <div style={{ marginTop: "20px" }}>
-          <p>The highest value : {highestProduct}</p>
-        </div>
       </div>
 
       <div style={{ marginLeft: "25%", width: "50%", marginTop: "50px" }}>
