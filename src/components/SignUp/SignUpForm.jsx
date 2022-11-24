@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import "./style.css";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import greenTick from "../../assets/greenTick.png";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const unsuccessStyles = {
@@ -16,7 +17,7 @@ const unsuccessStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     height: "100px",
-    width: "100px",
+    width: "200px",
     backgroundColor: "white",
     borderColor: "red",
   },
@@ -31,7 +32,7 @@ const successStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     height: "100px",
-    width: "100px",
+    width: "200px",
     backgroundColor: "white",
     borderColor: "green",
   },
@@ -52,10 +53,6 @@ function SignUpForm({ urlAPI }) {
 
   const handleSubmit = async () => {
     const cartTemp = window.localStorage.getItem("cartTemp");
-    console.log(username);
-    console.log(password);
-    console.log(email);
-    console.log(confirmPassword);
     if (password !== confirmPassword) {
       setErrMsg("Password and Confirm Password do not match");
       await delay(200);
@@ -228,17 +225,17 @@ function SignUpForm({ urlAPI }) {
                 style={successStyles}
                 ariaHideApp={false}
               >
-                <img
-                  style={{
-                    height: "40px",
-                    width: "40px",
-                    display: "block",
-                    textAlign: "center",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                  src="https://assets.stickpng.com/images/5aa78e207603fc558cffbf19.png"
-                ></img>
+                  <img
+                    style={{
+                      height: "40px",
+                      width: "50px",
+                      display: "block",
+                      textAlign: "center",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                    src={greenTick}
+                  ></img>
                 <p
                   style={{
                     textAlign: "center",

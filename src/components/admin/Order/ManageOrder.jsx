@@ -4,6 +4,7 @@ import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
 import OrderItem from "../../OrderManage/OrderItems/OrderItem";
 import { orderData } from "../Order/Chart/OrderData";
 import axios from "axios";
+const urlAPI = "https://apple-store-back-end.herokuapp.com/";
 const ManageOrder = ({
   orderList,
   isLoading,
@@ -83,6 +84,7 @@ const ManageOrder = ({
                     userRole="admin"
                     numberOrderConfirm={numberConfirmORD}
                     setOrderConfirm={setNumberConfirmORD}
+                    urlAPI={urlAPI}
                   />
                 </div>
               ))}

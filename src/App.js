@@ -75,6 +75,7 @@ const App = () => {
     fetchProducts();
   }, []);
 
+
   const fetchProducts = async () => {
     // const { data } = await commerce.products.list();
     // // setProducts(data);
