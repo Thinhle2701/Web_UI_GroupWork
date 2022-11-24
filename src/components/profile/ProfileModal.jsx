@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { IconButton, TextField, Button } from "@material-ui/core";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Input } from "@mui/material";
@@ -14,6 +14,7 @@ import {
   refFromURL,
 } from "firebase/storage";
 const ProfileModal = ({ setOpenModal, profile, setUser, urlAPI }) => {
+  
   const [email, setEmail] = useState(profile.email);
   const [phone, setPhone] = useState(profile.phone);
   const [img, setImage] = useState(profile.url);
@@ -34,13 +35,17 @@ const ProfileModal = ({ setOpenModal, profile, setUser, urlAPI }) => {
     inputRef.current.value = null;
     setChangeAvatar(false);
   };
+  useEffect(()=>{
 
-  const handleSaveChange = () => {
+  },[profile])
+
+  console.log(profile)
+  const handleSaveChange = async () => {
     console.log("phone: ", phone);
     console.log("add", address);
     console.log("img", img);
     const url = urlAPI + "api/user/update/" + profile.userID;
-    axios
+   await axios
       .put(url, {
         email: email,
         url: img,
@@ -48,8 +53,8 @@ const ProfileModal = ({ setOpenModal, profile, setUser, urlAPI }) => {
         phone: phone,
       })
       .then(async (response) => {
-        console.log(response);
-        await setUser(response.data);
+        console.log(response.data);
+        await setUser(response);
         // SetUserLogin(response.data);
         await window.localStorage.setItem(
           "user",
@@ -59,7 +64,7 @@ const ProfileModal = ({ setOpenModal, profile, setUser, urlAPI }) => {
           "urlAvatar",
           JSON.stringify(response.data.url)
         );
-        // // fetchCart(true, response.data)
+        // fetchCart(true, response.data)
       });
 
     window.location.reload();
